@@ -1,2 +1,2 @@
-# react-native-navigator-router
-Integration React Router with React Native with navigator.
+# React Native Navigator Router
+Integration React Native and React Router with navigator.
