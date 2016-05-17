@@ -1,4 +1,5 @@
-import React, { Component, Platform, BackAndroid, Navigator, StyleSheet, View } from 'react-native';
+import React, { Component } from 'react';
+import { Platform, BackAndroid, Navigator, View, StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -7,7 +8,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export function createNavigatorRouter(RootComponent, onBack = null, style = {}) {
+export function createNavigatorRouter(onBack = null, style = {}) {
   if (!onBack) {
     onBack = function (index) {
       if (index > 1) {
@@ -119,7 +120,7 @@ export function createNavigatorRouter(RootComponent, onBack = null, style = {}) 
         <Navigator
           ref="navigator"
           style={[styles.container, style]}
-          initialRoute={{ root: true }}
+          initialRoute={{ root: true, component: this.props.children }}
           configureScene={this.configureScene}
           renderScene={this.renderScene}
           onDidFocus={this.handleNavigatorDidFocus}
@@ -155,10 +156,10 @@ export function createNavigatorRouter(RootComponent, onBack = null, style = {}) 
       if (route.component) {
         return React.cloneElement(route.component, {
           location: route.location,
-          routeParams: route.routeParams,
+          query: route.query,
         });
       }
-      return <RootComponent />;
+      return <View />;
     }
   }
 };

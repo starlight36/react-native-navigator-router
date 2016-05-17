@@ -2,16 +2,9 @@
  * Sample React Native App
  */
 import React, { Component } from 'react';
-import {
-  Text,
-  View,
-  TouchableHighlight,
-  StyleSheet,
-} from 'react-native';
-
-import { createMemoryHistory, Router, Route } from 'react-router';
+import { Text, View, TouchableHighlight, StyleSheet } from 'react-native';
+import { createMemoryHistory, Router, IndexRoute, Route } from 'react-router';
 import { createNavigatorRouter } from 'react-native-navigator-router';
-
 
 class Home extends Component {
   static contextTypes = {
@@ -120,9 +113,10 @@ class App extends Component {
   render() {
     return (
       <Router history={createMemoryHistory('/')}>
-        <Route path='/' component={createNavigatorRouter(Home)}>
-          <Route path="/about" component={About}/>
-          <Route path="/detail" component={Detail}/>
+        <Route path='/' component={createNavigatorRouter()}>
+          <IndexRoute component={Home} />
+          <Route path="/about" component={About} />
+          <Route path="/detail" component={Detail} />
         </Route>
       </Router>
     );
