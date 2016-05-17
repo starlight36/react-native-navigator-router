@@ -1,14 +1,12 @@
 /**
  * Sample React Native App
  */
-
-import React, {
-  AppRegistry,
-  Component,
-  StyleSheet,
+import React, { Component } from 'react';
+import {
   Text,
+  View,
   TouchableHighlight,
-  View
+  StyleSheet,
 } from 'react-native';
 
 import { createMemoryHistory, Router, Route } from 'react-router';
@@ -37,13 +35,11 @@ class Home extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={{height: 30, backgroundColor: '#00ff00'}}>
-          <TouchableHighlight onPress={() => this.context.router.push('/about')}>
-            <Text style={styles.instructions}>
-              This is Home, Press here to About.
-            </Text>
-          </TouchableHighlight>
-        </View>
+        <TouchableHighlight onPress={() => this.context.router.push('/about')}>
+          <Text style={styles.welcome}>
+            This is Home, go to About.
+          </Text>
+        </TouchableHighlight>
       </View>
     );
   }
@@ -72,9 +68,46 @@ class About extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <TouchableHighlight onPress={() => this.context.router.push('/detail')}>
+          <Text style={styles.welcome}>
+            This is About, go to detail.
+          </Text>
+        </TouchableHighlight>
         <TouchableHighlight onPress={() => this.context.router.goBack()}>
           <Text style={styles.welcome}>
-            About, Press here to go back.
+            Press here to go back home.
+          </Text>
+        </TouchableHighlight>
+      </View>
+    );
+  }
+}
+
+class Detail extends Component {
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired,
+  };
+
+  static defaultProps() {
+    return {
+      key: 'detail',
+    };
+  }
+
+  componentDidMount() {
+    console.log('About detail');
+  }
+
+  componentWillUnmount() {
+    console.log('About detail');
+  }
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <TouchableHighlight onPress={() => this.context.router.go(-2)}>
+          <Text style={styles.welcome}>
+            This is detail, Press here to go back home.
           </Text>
         </TouchableHighlight>
       </View>
@@ -88,7 +121,8 @@ class App extends Component {
     return (
       <Router history={createMemoryHistory('/')}>
         <Route path='/' component={createNavigatorRouter(Home)}>
-          <Route path="/about" component={About} />
+          <Route path="/about" component={About}/>
+          <Route path="/detail" component={Detail}/>
         </Route>
       </Router>
     );

@@ -2,7 +2,8 @@
  * Sample React Native App
  */
 
-import React, { AppRegistry } from 'react-native';
+import React from 'react';
+import { AppRegistry } from 'react-native';
 import App from './src/index';
 
 

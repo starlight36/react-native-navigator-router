@@ -90,7 +90,11 @@ export function createNavigatorRouter(RootComponent, onBack = null, style = {}) 
       if (location.action === 'PUSH') {
         this.refs.navigator.push(route);
       } else if (location.action === 'POP') {
-        this.refs.navigator.pop();
+        const routes = this.refs.navigator.getCurrentRoutes().filter(
+          route => (location.pathname === '/' && route.root)
+          || (route.location && route.location.key === location.key)
+        );
+        this.refs.navigator.popToRoute(routes[0]);
       } else if (location.action === 'REPLACE') {
         this.refs.navigator.replace(route);
       }
@@ -101,7 +105,7 @@ export function createNavigatorRouter(RootComponent, onBack = null, style = {}) 
         <Navigator
           ref="navigator"
           style={[styles.container, style]}
-          initialRoute={{}}
+          initialRoute={{ root: true }}
           configureScene={this.configureScene}
           renderScene={this.renderScene}
         />
