@@ -32,9 +32,11 @@ export function createNavigatorRouter(RootComponent, onBack = null, style = {}) 
 
     constructor() {
       super();
+      this.isSynchronizingRoute = false;
       this.backHandlers = [];
       this.handleBackButton = this.handleBackButton.bind(this);
       this.handleRouteChange = this.handleRouteChange.bind(this);
+      this.handleNavigatorDidFocus = this.handleNavigatorDidFocus.bind(this);
     }
 
     componentDidMount() {
@@ -81,6 +83,9 @@ export function createNavigatorRouter(RootComponent, onBack = null, style = {}) 
     }
 
     handleRouteChange(location) {
+      // Skip change route when synchronize route from navigator.
+      if (this.isSynchronizingRoute) return;
+
       const route = {
         location,
         query: location.query,
@@ -100,6 +105,15 @@ export function createNavigatorRouter(RootComponent, onBack = null, style = {}) 
       }
     }
 
+    handleNavigatorDidFocus(route) {
+      const current = this.props.location;
+      if ((route.root && current.pathname === '/')
+        || (route.location && route.location.key === current.key)) return;
+      this.isSynchronizingRoute = true;
+      this.context.router.goBack();
+      this.isSynchronizingRoute = false;
+    }
+
     render() {
       return (
         <Navigator
@@ -108,6 +122,7 @@ export function createNavigatorRouter(RootComponent, onBack = null, style = {}) 
           initialRoute={{ root: true }}
           configureScene={this.configureScene}
           renderScene={this.renderScene}
+          onDidFocus={this.handleNavigatorDidFocus}
         />
       );
     }
