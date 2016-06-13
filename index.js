@@ -84,26 +84,28 @@ export function createNavigatorRouter(onBack = null, style = {}) {
     }
 
     handleRouteChange(location) {
-      // Skip change route when synchronize route from navigator.
-      if (this.isSynchronizingRoute) return;
+      setTimeout(() => {
+        // Skip change route when synchronize route from navigator.
+        if (this.isSynchronizingRoute) return;
 
-      const route = {
-        location,
-        query: location.query,
-        component: this.props.children,
-      };
+        const route = {
+          location,
+          query: location.query,
+          component: this.props.children,
+        };
 
-      if (location.action === 'PUSH') {
-        this.refs.navigator.push(route);
-      } else if (location.action === 'POP') {
-        const routes = this.refs.navigator.getCurrentRoutes().filter(
-          route => (location.pathname === '/' && route.root)
-          || (route.location && route.location.key === location.key)
-        );
-        this.refs.navigator.popToRoute(routes[0]);
-      } else if (location.action === 'REPLACE') {
-        this.refs.navigator.replace(route);
-      }
+        if (location.action === 'PUSH') {
+          this.refs.navigator.push(route);
+        } else if (location.action === 'POP') {
+          const routes = this.refs.navigator.getCurrentRoutes().filter(
+            route => (location.pathname === '/' && route.root)
+            || (route.location && route.location.key === location.key)
+          );
+          this.refs.navigator.popToRoute(routes[0]);
+        } else if (location.action === 'REPLACE') {
+          this.refs.navigator.replace(route);
+        }
+      }, 0);
     }
 
     handleNavigatorDidFocus(route) {
