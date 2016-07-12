@@ -73,6 +73,12 @@ Use this function to create React Router root component, pass `onBack` argument 
 
 This component is compatible with Redux, you can use [React Router Redux](https://github.com/reactjs/react-router-redux) to integration them. No special configurations is needed, just following the documents.
 
+# Showcase
+
+The following Apps are using:
+
+* Uxiaor - [iOS](https://itunes.apple.com/cn/app/you-xiao-er-zhao-you-zhao/id1116038326?mt=8) [Android](http://static.uxiaor.com/app/app.html)
+
 # Feedback
 
 If you any questions, use [Issues](https://github.com/starlight36/react-native-navigator-router/issues).
