@@ -77,7 +77,7 @@ export function createNavigatorRouter(onBack = null, style = {}) {
 
       const { navigator } = this.refs;
       if (navigator) {
-        return this.props.onBack.apply(this, [navigator.getCurrentRoutes().length]);
+        return onBack.apply(this, [navigator.getCurrentRoutes().length]);
       }
 
       return false;
